@@ -3,210 +3,146 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.UI;
 
 public class TestSun : MonoBehaviour
 {
+    public Button AddNode_ABtn;
+    public Button ReduceNode_ABtn;
+
+    public Button AddNode_BBtn;
+    public Button ReduceNode_BBtn;
+
+    public Button AddNode_B1Btn;
+    public Button ReduceNode_B1Btn;
+
+    public Button AddAllNode_Btn;
+
+    public Text Node_0Text;
+    public Text Node_AText;
+    public Text Node_BText;
+    public Text Node_B1Text;
+
+    private int _node_ACount = 0;
+    private int _node_BCount = 0;
+    private int _node_B1Count = 0;
+
+    //private string[] _nodeAType = {"主界面", "角色", "A"};
+    //private string[] _nodeBType = { "主界面", "角色", "B" };z
+
     void Start()
     {
-        ReddotMgr reddotMgr = new ReddotMgr();
-        reddotMgr.Init();
+        RedDotManager.Instance.Init();
 
-        reddotMgr.AddReddotNode("主界面", "角色", "武器");
-        reddotMgr.AddReddotNode("主界面", "角色", "防具");
-        reddotMgr.AddReddotNode("主界面", "角色", "饰品");
-        reddotMgr.AddReddotNode("主界面", "伙伴");
-        reddotMgr.AddReddotNode("抽卡", "抽技能");
+        //var node_a = reddotManager.RedDotModel.AddReddotNode("主界面", "角色", "技能");
+        //reddotManager.RedDotModel.GetReddotNode("主界面", "角色", "技能").RegisterCalculateFunc(CalculateNode_A);
+        //reddotManager.RedDotModel.GetReddotNode("主界面", "角色", "技能").AddRefreshListener(OnRefreshNodeA);
 
-        reddotMgr.PrintReddotTreeJson();
 
-        reddotMgr.RemoveReddotNode("主界面", "角色", "防具");
-        reddotMgr.PrintReddotTreeJson();
+        //var new_node_a = reddotManager.RedDotModel.RegisterReddotNode(null, "主界面", "角色", "技能");
 
-    }
-}
 
-public class ReddotTrieNode
-{
-    private Action<int> _onVlaueChanged;
 
-    public string Name { get; }
-    /// <summary>
-    /// 父节点
-    /// </summary>
-    public ReddotTrieNode Parent { get; }
-    /// <summary>
-    /// 子节点
-    /// </summary>
-    public Dictionary<string, ReddotTrieNode> Children { get; }
-    public int Count { get; set; }
 
-    public ReddotTrieNode(string name, ReddotTrieNode parent)
-    {
-        Name = name;
-        Parent = parent;
-        Children = new Dictionary<string, ReddotTrieNode>();
+        //var node_b = reddotManager.RedDotModel.AddReddotNode("主界面", "角色", "装备");
+        //node_b.RegisterCalculateFunc(CalculateNode_B);
+        //node_b.AddRefreshListener(OnRefreshNodeB);
+
+
+        //var node_b1 = reddotManager.RedDotModel.AddReddotNode("主界面", "角色", "装备", "装备强化");
+        //node_b1.RegisterCalculateFunc(() => { return _node_B1Count; });
+        //node_b1.AddRefreshListener(OnRefreshNodeB1);
+
+
+        //var node_0 = reddotManager.RedDotModel.AddReddotNode("主界面", "角色");
+        //node_0.AddRefreshListener(OnRefreshNode0);
+
+        View();
+
+        //reddotManager.RedDotModel.PrintJson();
     }
 
-    public void AddListener(Action<int> action)
+    private void View()
     {
-        if (action != null)
-        {
-            _onVlaueChanged += action;
-        }
+        //AddNode_ABtn.onClick.AddListener(() =>
+        //{
+        //    _node_ACount++;
+        //    reddotManager.RefreshRedDot("主界面", "角色", "技能");
+        //});
+        //ReduceNode_ABtn.onClick.AddListener(() =>
+        //{
+        //    _node_ACount = Mathf.Max(_node_ACount - 1, 0);
+        //    reddotManager.RefreshRedDot("主界面", "角色", "技能");
+        //});
+
+        //AddNode_BBtn.onClick.AddListener(() =>
+        //{
+        //    _node_BCount++;
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备");
+        //});
+        //ReduceNode_BBtn.onClick.AddListener(() =>
+        //{
+        //    _node_BCount = Mathf.Max(_node_BCount - 1, 0);
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备");
+        //});
+
+        //AddNode_B1Btn.onClick.AddListener(() =>
+        //{
+        //    _node_B1Count++;
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备", "装备强化");
+        //});
+
+        //ReduceNode_B1Btn.onClick.AddListener(() =>
+        //{
+        //    _node_B1Count = Mathf.Max(_node_B1Count - 1, 0);
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备", "装备强化");
+        //});
+
+        //AddAllNode_Btn.onClick.AddListener(() =>
+        //{
+        //    _node_ACount++;
+        //    _node_BCount++;
+        //    _node_B1Count++;
+        //    reddotManager.RefreshRedDot("主界面", "角色", "技能");
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备");
+        //    reddotManager.RefreshRedDot("主界面", "角色", "装备", "装备强化");
+        //});
     }
 
-    public void RemoveListener(Action<int> action)
+    private int CalculateNode_A()
     {
-        if (action != null)
-        {
-            _onVlaueChanged -= action;
-        }
+        return _node_ACount;
     }
 
-    public void RemoveAllListener()
+    private int CalculateNode_B()
     {
-        _onVlaueChanged = null;
-    }
-}
-
-public class ReddotMgr
-{
-    private ReddotTrieNode _root;
-    private HashSet<ReddotTrieNode> _dirtyNoodSet;
-
-    public void Init()
-    {
-        _root = new ReddotTrieNode("root", null);
-        _dirtyNoodSet = new HashSet<ReddotTrieNode>();
+        return _node_BCount;
     }
 
-    public ReddotTrieNode AddReddotNode(params string[] paramPath)
+
+    private void OnRefreshNode0(string name, int count)
     {
-        ReddotTrieNode node = GetOrAddNode(paramPath);
-        return node;
+        Node_0Text.text = $"{name}:{count}";
+        Debug.LogError("刷新角色(父节点)");
     }
 
-    /// <summary>
-    /// 删除节点时需考虑是否有子节点 否则删除会影响子节点
-    /// </summary>
-    public bool RemoveReddotNode(params string[] paramPath)
+    private void OnRefreshNodeA(string name, int count)
     {
-        ReddotTrieNode tempNode = _root;
-        foreach (string path in paramPath)
-        {
-            if (!tempNode.Children.TryGetValue(path, out tempNode))
-            {
-                return false;
-            }
-        }
-
-        return tempNode.Parent.Children.Remove(tempNode.Name);
+        Node_AText.text = $"{name}:{count}";
     }
 
-    public ReddotTrieNode GetReddotNode(params string[] paramPath)
+    private void OnRefreshNodeB(string name, int count)
     {
-        ReddotTrieNode tempNode = _root;
-        foreach (string path in paramPath)
-        {
-            if (!tempNode.Children.TryGetValue(path, out tempNode))
-            {
-                return null;
-            }
-        }
-        return tempNode;
+        Node_BText.text = $"{name}:{count}";
     }
 
-    public int GetReddotNodeCount(params string[] paramPath)
+    private void OnRefreshNodeB1(string name, int count)
     {
-        return GetReddotNode(paramPath)?.Count ?? 0;
+        Node_B1Text.text = $"{name}:{count}";
     }
 
-    private ReddotTrieNode GetOrAddNode(params string[] paramPath)
+    private void Update()
     {
-        ReddotTrieNode tempNode = _root;
-        foreach (string path in paramPath)
-        {
-            if (!tempNode.Children.TryGetValue(path, out ReddotTrieNode childNode))
-            {
-                childNode = new ReddotTrieNode(path, tempNode);
-                tempNode.Children[path] = childNode;
-            }
-
-            tempNode = childNode;
-        }
-
-        return tempNode;
-    }
-
-    public ReddotTrieNode AddListener(Action<int> action, params string[] paramPath)
-    {
-        if (action == null)
-        {
-            return null;
-        }
-
-        ReddotTrieNode node = GetOrAddNode(paramPath);
-        node?.AddListener(action);
-        return node;
-    }
-
-    public void RemoveListener(Action<int> action, params string[] paramPath)
-    {
-        if (action == null)
-        {
-            return;
-        }
-
-        ReddotTrieNode node = GetOrAddNode(paramPath);
-        node?.RemoveListener(action);
-    }
-
-    public void RemoveAllListener(params string[] paramPath)
-    {
-        ReddotTrieNode node = GetOrAddNode(paramPath);
-        node?.RemoveAllListener();
-    }
-
-    public void AddDirtyNode(ReddotTrieNode node)
-    {
-        _dirtyNoodSet.Add(node);
-    }
-
-    public void OnUpdate()
-    {
-        if (_dirtyNoodSet.Count > 0)
-        {
-            foreach (var node in _dirtyNoodSet)
-            {
-                //当父节点 查询到自己的值有差异 即被修改，会触发外部的监听方法
-                //node.GetNodeValue();
-            }
-
-            _dirtyNoodSet.Clear();
-        }
-    }
-
-    // 打印树结构为 JSON 格式
-    public void PrintReddotTreeJson()
-    {
-        var josnObj = BuildJson(_root);
-        Debug.LogError(JsonConvert.SerializeObject(josnObj));
-    }
-
-    // 递归方法：构建节点及其子节点的 JSON 对象
-    private object BuildJson(ReddotTrieNode node)
-    {
-        // 如果当前节点有子节点，递归构建子节点的 JSON 对象
-        if (node.Children.Count > 0)
-        {
-            var childrenJson = new Dictionary<string, object>();
-            foreach (var child in node.Children.Values)
-            {
-                childrenJson[child.Name] = BuildJson(child); // 递归处理每个子节点
-            }
-            return childrenJson;
-        }
-
-        return new { };
+        //reddotManager.OnUpdate(Time.deltaTime);
     }
 }
