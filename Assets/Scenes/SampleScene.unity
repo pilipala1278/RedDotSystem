@@ -2721,7 +2721,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1715320755}
-  - component: {fileID: 1715320756}
   - component: {fileID: 1715320757}
   m_Layer: 0
   m_Name: GameObject
@@ -2745,29 +2744,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1715320756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715320754}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51cfbb70ebc824649a0a2a0d0aa1a4f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AddNode_ABtn: {fileID: 616631142}
-  ReduceNode_ABtn: {fileID: 613855673}
-  AddNode_BBtn: {fileID: 486332551}
-  ReduceNode_BBtn: {fileID: 691011034}
-  AddNode_B1Btn: {fileID: 153338921}
-  ReduceNode_B1Btn: {fileID: 172996598}
-  AddAllNode_Btn: {fileID: 20572433}
-  Node_0Text: {fileID: 87727121}
-  Node_AText: {fileID: 1441848507}
-  Node_BText: {fileID: 567781174}
-  Node_B1Text: {fileID: 1524245175}
 --- !u!114 &1715320757
 MonoBehaviour:
   m_ObjectHideFlags: 0

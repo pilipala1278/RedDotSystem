@@ -61,7 +61,6 @@ public class RedDotManager
     #region 刷新监听相关
     public void AddRefreshListener(ERedDotType redDotType, Action<ERedDotType, int> refreshAction, bool isAutoRefresh = false)
     {
-        //todo 判断是否添加成功
         _redDotModel.AddRefreshListener(redDotType, refreshAction);
         if (isAutoRefresh)
         {

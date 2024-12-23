@@ -127,6 +127,8 @@ public class SampleScene : MonoBehaviour
     {
         MainMenu_Pet_NewBtn.SetNameText(reddotType.ToString());
         MainMenu_Pet_NewBtn.SetValue(count);
+
+        Debug.Log("---- OnRefreshPetNew");
     }
 
     private void OnDynamicRemoveRedDot()
