@@ -15,7 +15,7 @@ public enum ERedDotType
     Pet_New,
 }
 
-public class ReddotTypeComparer : IEqualityComparer<ERedDotType>
+public class RedDotTypeComparer : IEqualityComparer<ERedDotType>
 {
     public bool Equals(ERedDotType x, ERedDotType y)
     {

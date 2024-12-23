@@ -13,7 +13,7 @@ public class RedDotModel
     public RedDotModel()
     {
         _root = new RedDotTrieNode(ERedDotType.Root, null, 0);
-        _redDotPathDict = new Dictionary<ERedDotType, ERedDotType[]>();
+        _redDotPathDict = new Dictionary<ERedDotType, ERedDotType[]>(new RedDotTypeComparer());
     }
 
     /// <summary>
@@ -213,7 +213,7 @@ public class RedDotTrieNode
         RedDotType = type;
         Parent = parent;
         Deep = deep;
-        Children = new Dictionary<ERedDotType, RedDotTrieNode>();
+        Children = new Dictionary<ERedDotType, RedDotTrieNode>(new RedDotTypeComparer());
         IsValid = true;
     }
 
