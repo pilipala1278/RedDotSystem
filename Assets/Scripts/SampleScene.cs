@@ -16,6 +16,9 @@ public class SampleScene : MonoBehaviour
     private int _skillLevelUpData;
     private int _skillStarLevelUpData;
 
+    /// <summary>
+    /// 动态添加节点的值 默认为3
+    /// </summary>
     private int _newPetData = 3;
 
     private void Awake()
@@ -23,14 +26,20 @@ public class SampleScene : MonoBehaviour
         RedDotManager.Instance.Init();
 
         RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu);
-        RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu, ERedDotType.MainMenu_Skill);
         RedDotManager.Instance.RegisterAndAddRedDot(() => { return _petData; }, ERedDotType.MainMenu, ERedDotType.MainMenu_Pet);
+
+        //对于一些配置表的静态红点可以先添加 AddRedDotNode
+        //然后通过 RegisterAndAddRedDot() 去注册计算方法并不会重复添加红点
+        RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu, ERedDotType.MainMenu_Skill, ERedDotType.Skill_LevelUp);
         RedDotManager.Instance.RegisterAndAddRedDot(() => { return _skillLevelUpData; }, ERedDotType.MainMenu, ERedDotType.MainMenu_Skill, ERedDotType.Skill_LevelUp);
+
         RedDotManager.Instance.RegisterAndAddRedDot(() => { return _skillStarLevelUpData; }, ERedDotType.MainMenu, ERedDotType.MainMenu_Skill, ERedDotType.Skill_StarLevelUp);
+        RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu, ERedDotType.MainMenu_Skill);
     }
 
     void Start()
     {
+        //数据刷新模拟
         MainMenu_PetBtn.OnLeftClick = () =>
         {
             _petData = Mathf.Max(_petData + 1, 0);
@@ -127,8 +136,6 @@ public class SampleScene : MonoBehaviour
     {
         MainMenu_Pet_NewBtn.SetNameText(reddotType.ToString());
         MainMenu_Pet_NewBtn.SetValue(count);
-
-        Debug.Log("---- OnRefreshPetNew");
     }
 
     private void OnDynamicRemoveRedDot()
@@ -148,7 +155,6 @@ public class SampleScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             OnDynamicAddRedDot();
-            //OnDynamicRemoveRedDot();
         }
 
         if (Input.GetKeyDown(KeyCode.D))

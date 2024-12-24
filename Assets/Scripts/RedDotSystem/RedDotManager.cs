@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RedDotManager
 {
-    private const float k_refresh_interval = 0.5f;
+    private const float k_refresh_interval = 0.1f;
 
     private static RedDotManager _instance = null;
     public static RedDotManager Instance
@@ -127,7 +127,6 @@ public class RedDotManager
                     if (node != null && node.IsValid)
                     {
                         node.CalculateCount();
-                        Debug.Log($"---- 刷新 {node.RedDotType}");
                     }
                 }
 
