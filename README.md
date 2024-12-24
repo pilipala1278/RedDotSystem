@@ -12,8 +12,8 @@ RedDotManager.Instance.Init();
 RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu);
 RedDotManager.Instance.RegisterAndAddRedDot(() => { return _petData; }, ERedDotType.MainMenu, ERedDotType.MainMenu_Pet);
 
-//对于一些配置表的静态红点可以先添加 AddRedDotNode
-//然后通过 RegisterAndAddRedDot() 去注册计算方法并不会重复添加红点
+//对于一些配置表的静态红点节点可以先添加 AddRedDotNode
+//然后通过 RegisterAndAddRedDot() 去注册计算方法并不会重复添加红点节点
 RedDotManager.Instance.AddRedDotNode(ERedDotType.MainMenu, ERedDotType.MainMenu_Skill, ERedDotType.Skill_LevelUp);
 RedDotManager.Instance.RegisterAndAddRedDot(() => { return _skillLevelUpData; }, ERedDotType.MainMenu, ERedDotType.MainMenu_Skill, ERedDotType.Skill_LevelUp);
 
